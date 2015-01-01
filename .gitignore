@@ -74,3 +74,12 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+.settings
+Debug
+Release
+targetConfigs
+.ccsproject
+.cproject
+.project
+*.cmd
