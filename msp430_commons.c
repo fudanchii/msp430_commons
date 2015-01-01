@@ -16,8 +16,8 @@
 extern unsigned int duty_cycle_at[];
 
 inline void Pin1_select_peripheral(int bits) {
-	P1DIR	|= bits;                // P1.2 = output
-	P1SEL	|= bits;                // P1.2 = TA1 output
+	P1DIR	|= bits;                // Set <bits> direction (output)
+	P1SEL	|= bits;                // Select <bits> for peripheral use
 }
 
 inline void Pin1_switch_setup(int bits) {
@@ -53,7 +53,7 @@ inline void Pin1_setup(int direction, int bits) {
 }
 
 inline void PWM1_std_setup(int period, int duty_cycle) {
-	TA0CTL	 = TASSEL_2 + MC_1;     		// SMCLK, upmode
+	TA0CTL	 = TASSEL_2 | MC_1;     		// SMCLK, upmode
 	TA0CCTL1 = OUTMOD_7 | CCIE;      		// TACCR1 reset/set
 	TA0CCR0  = period-1; 			        // PWM Period
 	TA0CCR1	 = duty_cycle;		            // TACCR1 initial PWM Duty Cycle
@@ -64,14 +64,14 @@ inline void init_servo_angle_lut() {
 	int i = 0;
 	unsigned int servo_stepval, servo_stepnow;
 
-	// Calculate the step value and define the current step, defaults to minimum.
+	// Calculate the step value and define the current step, defaults to maximum.
 	servo_stepval 	= ((SERVO_MAX - SERVO_MIN) / SERVO_STEPS);
-	servo_stepnow	= SERVO_MIN;
+	servo_stepnow	= SERVO_MAX;
 
 	// Fill up the LUT
 	for (; i < SERVO_STEPS + 1; i++) {
 		duty_cycle_at[i] = servo_stepnow;
-		servo_stepnow += servo_stepval;
+		servo_stepnow -= servo_stepval;
 	}
 }
 
