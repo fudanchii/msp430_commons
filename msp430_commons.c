@@ -15,9 +15,16 @@
 
 extern unsigned int duty_cycle_at[];
 
+static inline void _PWM1_std_setup(int period, int duty_cycle, int ie) {
+	TA0CTL	 = TASSEL_2 | MC_1;			// SMCLK, upmode
+	TA0CCTL1 = OUTMOD_7 | ie;			// TACCR1 reset/set
+	TA0CCR0  = period-1;				// PWM Period
+	TA0CCR1	 = duty_cycle;				// TACCR1 initial PWM Duty Cycle
+}
+
 inline void Pin1_select_peripheral(int bits) {
-	P1DIR	|= bits;                // Set <bits> direction (output)
-	P1SEL	|= bits;                // Select <bits> for peripheral use
+	P1DIR	|= bits;					// Set <bits> direction (output)
+	P1SEL	|= bits;					// Select <bits> for peripheral use
 }
 
 inline void Pin1_switch_setup(int bits) {
@@ -52,11 +59,12 @@ inline void Pin1_setup(int direction, int bits) {
 	}
 }
 
+inline void PWM1_nointr_setup(int period, int duty_cycle) {
+	_PWM1_std_setup(period, duty_cycle, 0);
+}
+
 inline void PWM1_std_setup(int period, int duty_cycle) {
-	TA0CTL	 = TASSEL_2 | MC_1;     		// SMCLK, upmode
-	TA0CCTL1 = OUTMOD_7 | CCIE;      		// TACCR1 reset/set
-	TA0CCR0  = period-1; 			        // PWM Period
-	TA0CCR1	 = duty_cycle;		            // TACCR1 initial PWM Duty Cycle
+	_PWM1_std_setup(period, duty_cycle, CCIE);
 }
 
 // You should define SERVO_MIN, SERVO_MAX, and SERVO_STEPS yourself
