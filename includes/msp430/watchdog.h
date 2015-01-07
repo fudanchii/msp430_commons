@@ -9,7 +9,7 @@
 #define MSP430_WATCHDOG_H_
 
 #define Watchdog_hold()		WDTCTL = WDTPW + WDTHOLD
-inline void Watchdog_disable();
+inline void Watchdog_disable(void);
 inline void Watchdog_enable(int);
 
 

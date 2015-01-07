@@ -23,12 +23,12 @@ inline void Switch_edgeflip(void);
 
 inline void	GreenLED_setup(void);
 #define GreenLED_on()	P1OUT |= BIT6
-#define GreenLED_off()	P1OUT &= ~BIT6;
-#define GreenLED_flip() P1OUT ^= BIT6;
+#define GreenLED_off()	P1OUT &= ~BIT6
+#define GreenLED_flip() P1OUT ^= BIT6
 
 inline void RedLED_setup(void);
-#define RedLED_on()		P1OUT |= BIT0;
-#define RedLED_off()	P1OUT &= ~BIT0;
-#define RedLED_flip()	P1OUT ^= BIT0;
+#define RedLED_on()		P1OUT |= BIT0
+#define RedLED_off()	P1OUT &= ~BIT0
+#define RedLED_flip()	P1OUT ^= BIT0
 
 #endif /* MSP430_PIN1_H_ */
