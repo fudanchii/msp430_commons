@@ -7,20 +7,19 @@
 #ifndef ADMSP_H_
 #define ADMSP_H_
 
-#include <msp430.h>
-#include <msp430/pin1.h>
+#include <msp430/commons.h>
 
 #define P_IN	1
 #define P_OUT	2
 #define P_SW	3
 
 
-inline void Pin1_peripheral_select(int bits) {
+inline void Port1_peripheral_select(int bits) {
 	P1DIR |= bits;					// Set <bits> direction (output)
 	P1SEL |= bits;					// Select <bits> for peripheral use
 }
 
-inline void Pin1_extswitch_enable(int bits) {
+inline void Port1_extswitch_enable(int bits) {
 	// Enable interrupt on Pin 1.<bits>
 	P1IE  |= bits;
 
@@ -30,7 +29,7 @@ inline void Pin1_extswitch_enable(int bits) {
 }
 
 
-inline void Pin1_extswitch_setup(int bits) {
+inline void Port1_extswitch_setup(int bits) {
 	// set Pin1 interrupt on Hi-Lo transition
 	P1IES |= bits;
 
@@ -38,45 +37,45 @@ inline void Pin1_extswitch_setup(int bits) {
 	P1OUT |= bits;
 	P1REN |= bits;
 
-	Pin1_extswitch_enable(bits);
+	Port1_extswitch_enable(bits);
 }
 
-inline void Pin1_extswitch_disable(int bits) {
+inline void Port1_extswitch_disable(int bits) {
 	P1IE &= ~bits;
 	P1IFG = 0;
 }
 
 inline void Switch_disable() {
-	Pin1_extswitch_disable(BIT3);
+	Port1_extswitch_disable(PIN3);
 }
 
 inline void Switch_enable() {
-	Pin1_extswitch_enable(BIT3);
+	Port1_extswitch_enable(PIN3);
 }
 
 inline void Switch_setup() {
-	Pin1_extswitch_setup(BIT3);
+	Port1_extswitch_setup(PIN3);
 }
 
-inline void Pin1_out_setup(int bits) {
+inline void Port1_out_setup(int bits) {
 	P1DIR |= bits;
 	P1OUT &= ~bits;
 }
 
-inline void Pin1_extswitch_edgeflip(int bits) {
+inline void Port1_extswitch_edgeflip(int bits) {
 	P1IES ^= bits;
 }
 
 inline void Switch_edgeflip() {
-	Pin1_extswitch_edgeflip(BIT3);
+	Port1_extswitch_edgeflip(PIN3);
 }
 
 inline void GreenLED_setup() {
-	Pin1_out_setup(BIT6);
+	Port1_out_setup(PIN6);
 }
 
 inline void RedLED_setup() {
-	Pin1_out_setup(BIT0);
+	Port1_out_setup(PIN0);
 }
 
 #endif /* ADMSP_H_ */

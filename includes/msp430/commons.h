@@ -9,8 +9,25 @@
 #define COMMONS_H_
 
 #include <msp430.h>
-#include <msp430/pin1.h>
+#include <msp430/port1.h>
 #include <msp430/watchdog.h>
+
+#define PIN0	BIT0
+#define PIN1	BIT1
+#define PIN2	BIT2
+#define PIN3	BIT3
+#define PIN4	BIT4
+#define PIN5	BIT5
+#define PIN6	BIT6
+#define PIN7	BIT7
+#define PIN8	BIT8
+#define PIN9	BIT9
+#define PINA	BITA
+#define PINB	BITB
+#define PINC	BITC
+#define PIND	BITD
+#define PINE	BITE
+#define PINF	BITF
 
 #ifndef PRAGMA
 #define PRAGMA(p)	_Pragma(#p)
