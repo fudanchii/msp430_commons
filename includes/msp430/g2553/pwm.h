@@ -8,22 +8,34 @@
 #ifndef PWM_H_
 #define PWM_H_
 
-extern unsigned int PWM1_duty_cycle_at[];
+extern unsigned int PWM1_1_duty_cycle_at[];
 
-inline void PWM1_nointr_setup(int period, int duty_cycle);
-inline void PWM1_std_setup(int period, int duty_cycle);
-#define PWM1_set_duty_cycle(dc)		TA0CCR1 = (dc)
+// not available in MSP430G2553-IN20
+extern unsigned int PWM1_2_duty_cycle_at[];
+
+extern unsigned int PWM2_1_duty_cycle_at[];
+extern unsigned int PWM2_2_duty_cycle_at[];
 
 
-#define INIT_SERVO_ANGLE_LUT(v,p) do { \
-	int i = 0; \
-	unsigned int servo_stepval, servo_stepnow; \
-	servo_stepval = ((p##_MAX - p##_MIN) / p##_STEPS); \
-	servo_stepnow = p##_MAX; \
-	for (; i < p##_STEPS + 1; i++) {	\
-		(v)[i] = servo_stepnow;	\
-		servo_stepnow -= servo_stepval;	\
-	}	\
-} while(0);
+inline void PWM1_1_nointr_setup(int period, int duty_cycle);
+inline void PWM1_1_std_setup(int period, int duty_cycle);
+
+inline void PWM1_2_nointr_setup(int period, int duty_cycle);
+inline void PWM1_2_std_setup(int period, int duty_cycle);
+
+inline void PWM2_1_nointr_setup(int period, int duty_cycle);
+inline void PWM2_1_std_setup(int period, int duty_cycle);
+
+inline void PWM2_2_nointr_setup(int period, int duty_cycle);
+inline void PWM2_2_std_setup(int period, int duty_cycle);
+
+
+#define PWM1_1_set_duty_cycle(dc)		TA0CCR1 = (dc)
+
+// not available in MSP430G2553-IN20
+#define PWM1_2_set_duty_cycle(dc)		TA0CCR2 = (dc)
+
+#define PWM2_1_set_duty_cycle(dc)		TA1CCR1 = (dc)
+#define PWM2_2_set_duty_cycle(dc)		TA1CCR2 = (dc)
 
 #endif /* PWM_H_ */

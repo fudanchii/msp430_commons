@@ -19,6 +19,11 @@ inline void Port1_peripheral_select(int bits) {
 	P1SEL |= bits;					// Select <bits> for peripheral use
 }
 
+inline void Port1_peripheral_select2(int bits) {
+	P1DIR  |= bits;
+	P1SEL2 |= bits;
+}
+
 inline void Port1_extswitch_enable(int bits) {
 	// Enable interrupt on Pin 1.<bits>
 	P1IE  |= bits;
